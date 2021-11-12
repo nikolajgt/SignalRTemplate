@@ -36,6 +36,7 @@ namespace dotnetcore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
+            services.AddSingleton<StockTicker>();
             services.AddSingleton<IMongoClient, MongoClient>(sp => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddTransient<IMongoConnection, MongoConnection>();
             services.AddSwaggerGen(c =>
@@ -106,8 +107,8 @@ namespace dotnetcore
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<ServerHub>("/ServerHub");
-                endpoints.MapHub<StockTickerHub>("/StockTicker");
+                endpoints.MapHub<StockTickerHub>("/StockTickerHub");
+                endpoints.MapHub<StockTickerHub>("/ServerHub");
                 endpoints.MapControllers();
             });
         }
