@@ -21,6 +21,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using dotnetcore.Hubs;
 
+
 namespace dotnetcore
 {
     public class Startup
@@ -35,7 +36,8 @@ namespace dotnetcore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSignalR();
+            services.AddSignalR()
+                .AddMessagePackProtocol();
             services.AddSingleton<StockTicker>();
             services.AddSingleton<IMongoClient, MongoClient>(sp => new MongoClient(Configuration.GetConnectionString("MongoDb")));
             services.AddTransient<IMongoConnection, MongoConnection>();
